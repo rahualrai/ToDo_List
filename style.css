@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f4f7;
+    background-color: #e2e2e2;
     margin: 0;
     padding: 0;
     display: flex;
@@ -12,6 +12,7 @@ body {
 .container {
     width: 90%;
     max-width: 600px;
+    min-height: 800px;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -116,4 +117,19 @@ li:hover {
     color: #ff4d4f;
     cursor: pointer;
     margin-left: 10px;
+}
+
+.error-bubble {
+    position: fixed; /* Change to fixed position to center it horizontally */
+    top: 20px; /* Position at the top */
+    left: 50%; /* Position horizontally in the middle */
+    transform: translateX(-50%); /* Center horizontally */
+    background-color: #ff4d4f;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    opacity: 1;
+    transition: opacity 2s;
 }

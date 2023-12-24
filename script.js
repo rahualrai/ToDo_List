@@ -1,14 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('taskForm');
     const taskList = document.getElementById('taskList');
-
+    const taskInput = document.getElementById('taskInput');
+    
     form.addEventListener('submit', function(e) {
         e.preventDefault();
-        const taskInput = document.getElementById('taskInput');
         const taskDescription = taskInput.value.trim();
-
+    
         if (taskDescription) {
             addTask(taskDescription);
+            taskInput.value = '';
+            hideError();
+        } else {
+            showError('Task description cannot be empty.');
         }
     });
 
@@ -126,5 +130,35 @@ document.addEventListener('DOMContentLoaded', () => {
             taskItem.classList.toggle('completed', task.completed);
         })
         .catch(error => console.error('Error:', error));
+    }
+
+    function showError(message) {
+        hideError();
+    
+        const errorBubble = document.createElement('div');
+        errorBubble.className = 'error-bubble';
+        errorBubble.textContent = message;
+    
+        document.body.appendChild(errorBubble);
+    
+        setTimeout(() => {
+            fadeOutError(errorBubble);
+        }, 1000);
+    }
+    
+    function fadeOutError(errorBubble) {
+        if (errorBubble) {
+            errorBubble.style.opacity = 0;
+            setTimeout(() => {
+                errorBubble.remove();
+            }, 500); 
+        }
+    }
+    
+    function hideError() {
+        const existingErrorBubble = document.querySelector('.error-bubble');
+        if (existingErrorBubble) {
+            fadeOutError(existingErrorBubble);
+        }
     }
 });
