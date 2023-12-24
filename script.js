@@ -23,12 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(tasks => {
+                tasks.sort((a, b) => {
+                    return (a.completed === b.completed) ? 0 : a.completed ? 1 : -1;
+                });
+    
                 tasks.forEach(task => {
                     displayTask(task);
                 });
             })
             .catch(error => console.error('Error:', error));
-    }
+    }    
 
     function addTask(description) {
         fetch('http://localhost:3000/tasks', {
@@ -55,6 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const listItem = document.createElement('li');
         listItem.classList.add('task-item');
     
+        const taskDescriptionContainer = document.createElement('div');
+        taskDescriptionContainer.classList.add('description-container');
+    
         const taskDescription = document.createElement('span');
         taskDescription.textContent = task.description;
         taskDescription.classList.add('task-description');
@@ -78,11 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
         buttonContainer.appendChild(doneBtn);
         buttonContainer.appendChild(deleteBtn);
     
-        listItem.appendChild(taskDescription);
+        taskDescriptionContainer.appendChild(taskDescription);
+    
+        listItem.appendChild(taskDescriptionContainer);
         listItem.appendChild(buttonContainer);
     
         taskList.appendChild(listItem);
     }
+    
         
     function deleteTask(taskId, taskElement) {
         fetch(`http://localhost:3000/tasks/${taskId}`, {
