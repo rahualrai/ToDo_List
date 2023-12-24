@@ -23,12 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(tasks => {
+                tasks.sort((a, b) => {
+                    return (a.completed === b.completed) ? 0 : a.completed ? 1 : -1;
+                });
                 tasks.forEach(task => {
                     displayTask(task);
                 });
             })
             .catch(error => console.error('Error:', error));
-    }
+    }    
 
     function addTask(description) {
         fetch('http://localhost:3000/tasks', {
